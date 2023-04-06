@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "SAttributeComponent.h"
 #include "SInteractionComponent.h"
 #include "GameFramework/Character.h"
 #include "SCharacter.generated.h"
@@ -10,6 +11,7 @@
 class UCameraComponent;
 class USpringArmComponent;
 class USInteractionComponent;
+class USAttributeComponent;
 
 UCLASS()
 class ACTIONROGUELIKE_API ASCharacter : public ACharacter
@@ -40,6 +42,9 @@ protected:
 	UPROPERTY(VisibleAnywhere)
 	USInteractionComponent* InteractionComp;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	USAttributeComponent* AttributeComp;
+	
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
@@ -48,6 +53,8 @@ protected:
 	void PrimaryAttack();
 	void PrimaryInteract();
 	void PrimaryAttack_TimeElapsed();
+	void BlackHoleAttack();
+	void BlackholeAttack_TimeElapsed();
 
 public:
 	// Called every frame
