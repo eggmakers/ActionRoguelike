@@ -3,14 +3,13 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "SAttributeComponent.h"
-#include "SInteractionComponent.h"
 #include "GameFramework/Character.h"
 #include "SCharacter.generated.h"
 
 class UCameraComponent;
 class USpringArmComponent;
 class USInteractionComponent;
+class UAnimMontage;
 class USAttributeComponent;
 
 UCLASS()
@@ -19,20 +18,26 @@ class ACTIONROGUELIKE_API ASCharacter : public ACharacter
 	GENERATED_BODY()
 
 protected:
+
 	UPROPERTY(EditAnywhere, Category = "Attack")
 	TSubclassOf<AActor> ProjectileClass;
 
 	UPROPERTY(EditAnywhere, Category = "Attack")
+	TSubclassOf<AActor> BlackHoleProjectileClass;
+
+	UPROPERTY(EditAnywhere, Category = "Attack")
+	TSubclassOf<AActor> DashProjectileClass;
+
+	UPROPERTY(EditAnywhere, Category = "Attack")
 	UAnimMontage* AttackAnim;
 
-	FTimerHandle TimeHandle_PrimaryAttack;
+	FTimerHandle TimerHandle_PrimaryAttack;
+	FTimerHandle TimerHandle_BlackholeAttack;
+	FTimerHandle TimerHandle_Dash;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Attack")
+	float AttackAnimDelay;
 
-public:
-	// Sets default values for this character's properties
-	ASCharacter();
-
-protected:
 	UPROPERTY(VisibleAnywhere)
 	USpringArmComponent* SpringArmComp;
 
@@ -44,22 +49,32 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	USAttributeComponent* AttributeComp;
-	
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
 
 	void MoveForward(float Value);
+
 	void MoveRight(float Value);
+
 	void PrimaryAttack();
-	void PrimaryInteract();
+
 	void PrimaryAttack_TimeElapsed();
+
 	void BlackHoleAttack();
+
 	void BlackholeAttack_TimeElapsed();
 
-public:
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	void Dash();
 
-	// Called to bind functionality to input
+	void Dash_TimeElapsed();
+
+	// Re-use spawn logic between attacks
+	void SpawnProjectile(TSubclassOf<AActor> ClassToSpawn);
+
+	void PrimaryInteract();
+
+public:	
+
+	ASCharacter();
+
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
 };

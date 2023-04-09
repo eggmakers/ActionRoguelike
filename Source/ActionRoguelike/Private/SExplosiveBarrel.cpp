@@ -11,8 +11,6 @@ ASExplosiveBarrel::ASExplosiveBarrel()
 {
 	MeshComp = CreateDefaultSubobject<UStaticMeshComponent>("MeshComp");
 	MeshComp->SetSimulatePhysics(true);
-	// Enabling Simulate physics automatically changes the Profile to PhysicsActor in Blueprint, in C++ we need to change this manually.
-	MeshComp->SetCollisionProfileName(UCollisionProfile::PhysicsActor_ProfileName);
 	RootComponent = MeshComp;
 
 	ForceComp = CreateDefaultSubobject<URadialForceComponent>("ForceComp");
@@ -56,7 +54,7 @@ void ASExplosiveBarrel::OnActorHit(UPrimitiveComponent* HitComponent, AActor* Ot
 
 	FString CombinedString = FString::Printf(TEXT("Hit at location: %s"), *Hit.ImpactPoint.ToString());
 	DrawDebugString(GetWorld(), Hit.ImpactPoint, CombinedString, nullptr, FColor::Green, 2.0f, true);
-
+	
 	// Detailed info on logging in ue4
 	// https://nerivec.github.io/old-ue4-wiki/pages/logs-printing-messages-to-yourself-during-runtime.html
 

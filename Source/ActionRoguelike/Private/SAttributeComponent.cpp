@@ -18,5 +18,3 @@ bool USAttributeComponent::ApplyHealthChange(float Delta)
 
 	return true;
 }
-
-

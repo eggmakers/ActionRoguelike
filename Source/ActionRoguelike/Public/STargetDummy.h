@@ -3,11 +3,12 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "SAttributeComponent.h"
 #include "GameFramework/Actor.h"
 #include "STargetDummy.generated.h"
 
+
 class USAttributeComponent;
+
 
 UCLASS()
 class ACTIONROGUELIKE_API ASTargetDummy : public AActor
@@ -15,11 +16,11 @@ class ACTIONROGUELIKE_API ASTargetDummy : public AActor
 	GENERATED_BODY()
 	
 public:	
-	// Sets default values for this actor's properties
+
 	ASTargetDummy();
 
 protected:
-	
+
 	UPROPERTY(VisibleAnywhere)
 	USAttributeComponent* AttributeComp;
 
@@ -27,6 +28,6 @@ protected:
 	UStaticMeshComponent* MeshComp;
 
 	UFUNCTION()
-	void OnHealthChanged(AActor* InstigaActorActor, USAttributeComponent* OwningComp, float NewHealth, float Delta);
-	
+	void OnHealthChanged(AActor* InstigatorActor, USAttributeComponent* OwningComp, float NewHealth, float Delta);
+
 };
