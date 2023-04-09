@@ -50,6 +50,9 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	USAttributeComponent* AttributeComp;
 
+	UFUNCTION()
+	void OnHealthChanged(AActor* InstigatorActor, USAttributeComponent* OwningComp, float NewHealth, float Delta);
+
 	void MoveForward(float Value);
 
 	void MoveRight(float Value);
@@ -70,6 +73,8 @@ protected:
 	void SpawnProjectile(TSubclassOf<AActor> ClassToSpawn);
 
 	void PrimaryInteract();
+
+	virtual void PostInitializeComponents() override;
 
 public:	
 
