@@ -2,36 +2,35 @@
 
 
 #include "AI/SAICharacter.h"
-
-#include "AIController.h"
-#include "DrawDebugHelpers.h"
-#include "BehaviorTree/BlackboardComponent.h"
-#include "GameFramework/PawnMovementComponent.h"
-#include "Kismet/GameplayStatics.h"
 #include "Perception/PawnSensingComponent.h"
+#include "AIController.h"
+#include "BehaviorTree/BlackboardComponent.h"
+#include "DrawDebugHelpers.h"
 
-// Sets default values
+
 ASAICharacter::ASAICharacter()
 {
 	PawnSensingComp = CreateDefaultSubobject<UPawnSensingComponent>("PawnSensingComp");
 }
 
+
+
 void ASAICharacter::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
+
 	PawnSensingComp->OnSeePawn.AddDynamic(this, &ASAICharacter::OnPawnSeen);
 }
 
 void ASAICharacter::OnPawnSeen(APawn* Pawn)
 {
 	AAIController* AIC = Cast<AAIController>(GetController());
-	if(AIC)
+	if (AIC)
 	{
-		UBlackboardComponent* BBComp =  AIC->GetBlackboardComponent();
+		UBlackboardComponent* BBComp = AIC->GetBlackboardComponent();
 
 		BBComp->SetValueAsObject("TargetActor", Pawn);
 
-		DrawDebugString(GetWorld(), GetActorLocation(), "Player_Spotted", nullptr, FColor::White, 4.0f, true);
+		DrawDebugString(GetWorld(), GetActorLocation(), "PLAYER SPOTTED", nullptr, FColor::White, 4.0f, true);
 	}
 }
-
