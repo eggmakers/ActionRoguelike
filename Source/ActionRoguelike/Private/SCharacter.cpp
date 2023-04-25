@@ -44,6 +44,12 @@ void ASCharacter::PostInitializeComponents()
 }
 
 
+FVector ASCharacter::GetPawnViewLocation() const
+{
+	return CameraComp->GetComponentLocation();
+}
+
+
 // Called to bind functionality to input
 void ASCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
@@ -65,11 +71,10 @@ void ASCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 }
 
 
-void ASCharacter::HealSelf(float Amount/* = 100 */)
+void ASCharacter::HealSelf(float Amount /* = 100 */)
 {
 	AttributeComp->ApplyHealthChange(this, Amount);
 }
-
 
 
 void ASCharacter::MoveForward(float Value)
@@ -214,10 +219,3 @@ void ASCharacter::OnHealthChanged(AActor* InstigatorActor, USAttributeComponent*
 		DisableInput(PC);
 	}
 }
-
-
-FVector ASCharacter::GetPawnViewLocation() const
-{
-	return CameraComp->GetComponentLocation();
-}
-

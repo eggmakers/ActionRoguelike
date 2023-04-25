@@ -2,17 +2,18 @@
 
 
 #include "SGameModeBase.h"
-
-#include "DrawDebugHelpers.h"
-#include "SAttributeComponent.h"
-#include "AI/SAICharacter.h"
 #include "EnvironmentQuery/EnvQueryManager.h"
 #include "EnvironmentQuery/EnvQueryTypes.h"
+#include "EnvironmentQuery/EnvQueryInstanceBlueprintWrapper.h"
+#include "AI/SAICharacter.h"
+#include "SAttributeComponent.h"
 #include "EngineUtils.h"
+#include "DrawDebugHelpers.h"
 #include "SCharacter.h"
 
-static TAutoConsoleVariable<bool> CVarSpawnBots(TEXT("su.SpawnBots"), true, TEXT("Enable spawning of bots via timer"),
-                                                ECVF_Cheat);
+
+static TAutoConsoleVariable<bool> CVarSpawnBots(TEXT("su.SpawnBots"), true, TEXT("Enable spawning of bots via timer."), ECVF_Cheat);
+
 
 
 ASGameModeBase::ASGameModeBase()
@@ -25,9 +26,11 @@ void ASGameModeBase::StartPlay()
 {
 	Super::StartPlay();
 
-	GetWorldTimerManager().SetTimer(TimerHandle_SpawnBots, this, &ASGameModeBase::SpawnBotTimerElapsed,
-	                                SpawnTimerInterval, true);
+	// Continuous timer to spawn in more bots.
+	// Actual amount of bots and whether its allowed to spawn determined by spawn logic later in the chain...
+	GetWorldTimerManager().SetTimer(TimerHandle_SpawnBots, this, &ASGameModeBase::SpawnBotTimerElapsed, SpawnTimerInterval, true);
 }
+
 
 void ASGameModeBase::KillAll()
 {
@@ -36,9 +39,9 @@ void ASGameModeBase::KillAll()
 		ASAICharacter* Bot = *It;
 
 		USAttributeComponent* AttributeComp = USAttributeComponent::GetAttributes(Bot);
-		if (AttributeComp && AttributeComp->IsAlive())
+		if (ensure(AttributeComp) && AttributeComp->IsAlive())
 		{
-			AttributeComp->Kill(this); //pass in player? kill all credit
+			AttributeComp->Kill(this); // @fixme: pass in player? for kill credit
 		}
 	}
 }
@@ -46,7 +49,7 @@ void ASGameModeBase::KillAll()
 
 void ASGameModeBase::SpawnBotTimerElapsed()
 {
-	if (CVarSpawnBots.GetValueOnGameThread())
+	if (!CVarSpawnBots.GetValueOnGameThread())
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Bot spawning disabled via cvar 'CVarSpawnBots'."));
 		return;
@@ -58,7 +61,7 @@ void ASGameModeBase::SpawnBotTimerElapsed()
 		ASAICharacter* Bot = *It;
 
 		USAttributeComponent* AttributeComp = USAttributeComponent::GetAttributes(Bot);
-		if (AttributeComp && AttributeComp->IsAlive())
+		if (ensure(AttributeComp) && AttributeComp->IsAlive())
 		{
 			NrOfAliveBots++;
 		}
@@ -67,27 +70,26 @@ void ASGameModeBase::SpawnBotTimerElapsed()
 	UE_LOG(LogTemp, Log, TEXT("Found %i alive bots."), NrOfAliveBots);
 
 	float MaxBotCount = 10.0f;
-
-	if (DiffcultyCurve)
+	if (DifficultyCurve)
 	{
-		MaxBotCount = DiffcultyCurve->GetFloatValue(GetWorld()->TimeSeconds);
+		MaxBotCount = DifficultyCurve->GetFloatValue(GetWorld()->TimeSeconds);
 	}
 
 	if (NrOfAliveBots >= MaxBotCount)
 	{
-		UE_LOG(LogTemp, Log, TEXT("At Maximum bot capacity,Skipping bot spawn"));
+		UE_LOG(LogTemp, Log, TEXT("At maximum bot capacity. Skipping bot spawn."));
 		return;
 	}
 
-	UEnvQueryInstanceBlueprintWrapper* QueryInstane = UEnvQueryManager::RunEQSQuery(
-		this, SpawnBotQuery, this, EEnvQueryRunMode::RandomBest5Pct, nullptr);
-	if (ensure(QueryInstane))
+	UEnvQueryInstanceBlueprintWrapper* QueryInstance = UEnvQueryManager::RunEQSQuery(this, SpawnBotQuery, this, EEnvQueryRunMode::RandomBest5Pct, nullptr);
+	if (ensure(QueryInstance))
 	{
-		QueryInstane->GetOnQueryFinishedEvent().AddDynamic(this, &ASGameModeBase::QueryCompleted);
+		QueryInstance->GetOnQueryFinishedEvent().AddDynamic(this, &ASGameModeBase::OnQueryCompleted);
 	}
 }
 
-void ASGameModeBase::QueryCompleted(UEnvQueryInstanceBlueprintWrapper* QueryInstance, EEnvQueryStatus::Type QueryStatus)
+
+void ASGameModeBase::OnQueryCompleted(UEnvQueryInstanceBlueprintWrapper* QueryInstance, EEnvQueryStatus::Type QueryStatus)
 {
 	if (QueryStatus != EEnvQueryStatus::Success)
 	{
@@ -96,11 +98,11 @@ void ASGameModeBase::QueryCompleted(UEnvQueryInstanceBlueprintWrapper* QueryInst
 	}
 
 	TArray<FVector> Locations = QueryInstance->GetResultsAsLocations();
-
 	if (Locations.IsValidIndex(0))
 	{
 		GetWorld()->SpawnActor<AActor>(MinionClass, Locations[0], FRotator::ZeroRotator);
 
+		// Track all the used spawn locations
 		DrawDebugSphere(GetWorld(), Locations[0], 50.0f, 20, FColor::Blue, false, 60.0f);
 	}
 }
@@ -131,6 +133,6 @@ void ASGameModeBase::OnActorKilled(AActor* VictimActor, AActor* Killer)
 		GetWorldTimerManager().SetTimer(TimerHandle_RespawnDelay, Delegate, RespawnDelay, false);
 	}
 
-	UE_LOG(LogTemp, Log, TEXT("OnActorKilled: Victim: %s, Killer: %s"), *GetNameSafe(VictimActor),
-	       *GetNameSafe(Killer));
+	UE_LOG(LogTemp, Log, TEXT("OnActorKilled: Victim: %s, Killer: %s"), *GetNameSafe(VictimActor), *GetNameSafe(Killer));
 }
+

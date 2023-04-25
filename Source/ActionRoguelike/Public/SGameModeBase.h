@@ -3,9 +3,13 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "EnvironmentQuery/EnvQueryManager.h"
 #include "GameFramework/GameModeBase.h"
+#include "EnvironmentQuery/EnvQueryTypes.h"
 #include "SGameModeBase.generated.h"
+
+class UEnvQuery;
+class UEnvQueryInstanceBlueprintWrapper;
+class UCurveFloat;
 
 /**
  * 
@@ -24,7 +28,7 @@ protected:
 	UEnvQuery* SpawnBotQuery;
 
 	UPROPERTY(EditDefaultsOnly, Category = "AI")
-	UCurveFloat* DiffcultyCurve;
+	UCurveFloat* DifficultyCurve;
 
 	FTimerHandle TimerHandle_SpawnBots;
 
@@ -35,17 +39,17 @@ protected:
 	void SpawnBotTimerElapsed();
 
 	UFUNCTION()
-	void QueryCompleted(UEnvQueryInstanceBlueprintWrapper* QueryInstance, EEnvQueryStatus::Type QueryStatus);
+	void OnQueryCompleted(UEnvQueryInstanceBlueprintWrapper* QueryInstance, EEnvQueryStatus::Type QueryStatus);
 
 	UFUNCTION()
 	void RespawnPlayerElapsed(AController* Controller);
-	
+
 public:
-	
+
 	virtual void OnActorKilled(AActor* VictimActor, AActor* Killer);
 
 	ASGameModeBase();
-	
+
 	virtual void StartPlay() override;
 
 	UFUNCTION(Exec)

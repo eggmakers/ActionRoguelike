@@ -100,5 +100,4 @@ public:
 
 	UFUNCTION(Exec)
 	void HealSelf(float Amount = 100);
-
 };

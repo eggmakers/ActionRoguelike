@@ -31,4 +31,3 @@ void USBTService_CheckHealth::TickNode(UBehaviorTreeComponent& OwnerComp, uint8*
 		}
 	}
 }
-

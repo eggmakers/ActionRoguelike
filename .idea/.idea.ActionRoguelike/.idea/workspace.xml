@@ -7,22 +7,53 @@
   <component name="ChangeListManager">
     <list default="true" id="792813a0-4de1-4122-a615-24ffa2cf4d7b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ActionRoguelike/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ActionRoguelike/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ActionRoguelike/AI/MinionRangedBB.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ActionRoguelike/AI/MinionRangedBB.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/ActionRoguelike/AI/MinionRangedBP.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ActionRoguelike/AI/MinionRangedBP.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/ActionRoguelike/AI/MinionRangedBT.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ActionRoguelike/AI/MinionRangedBT.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ActionRoguelike/AI/QueryContext_AllPlayers.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ActionRoguelike/AI/QueryContext_AllPlayers.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ActionRoguelike/AI/Query_FindBotSpawn.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ActionRoguelike/AI/Query_FindBotSpawn.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ActionRoguelike/AI/Query_FindHidingSpot.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ActionRoguelike/AI/Query_FindHidingSpot.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ActionRoguelike/AI/TestingPawn.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ActionRoguelike/AI/TestingPawn.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/ActionRoguelike/DifficultyCurve.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ActionRoguelike/DifficultyCurve.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/ActionRoguelike/GameModeBP.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ActionRoguelike/GameModeBP.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/ActionRoguelike/Maps/TestLevel.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ActionRoguelike/Maps/TestLevel.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ActionRoguelike/Materials/M_HealthBar.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ActionRoguelike/Materials/M_HealthBar.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/ActionRoguelike/PlayerCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ActionRoguelike/PlayerCharacter.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ActionRoguelike/PlayerControllerBP.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ActionRoguelike/PlayerControllerBP.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ActionRoguelike/Proj_MagicProjectile.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ActionRoguelike/Proj_MagicProjectile.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/ActionRoguelike/Proj_MagicProjectile_AI.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ActionRoguelike/Proj_MagicProjectile_AI.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ActionRoguelike/UI/Credits_Widget.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ActionRoguelike/UI/Credits_Widget.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ActionRoguelike/UI/GameModeInfo_Widget.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ActionRoguelike/UI/GameModeInfo_Widget.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ActionRoguelike/UI/Main_HUD.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ActionRoguelike/UI/Main_HUD.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ActionRoguelike/UI/MinionHealth_Widget.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ActionRoguelike/UI/MinionHealth_Widget.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/ActionRoguelike/UI/PlayerHealth_Widget.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ActionRoguelike/UI/PlayerHealth_Widget.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ExampleContent/CameraShake/camera_shake_small.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ExampleContent/CameraShake/camera_shake_small.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ParagonMinions/Characters/Minions/Down_Minions/Materials/M_SimpleLaneMinion.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ParagonMinions/Characters/Minions/Down_Minions/Materials/M_SimpleLaneMinion.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/ParagonMinions/Characters/Minions/Down_Minions/Meshes/Minion_Lane_Ranged_Physics.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ParagonMinions/Characters/Minions/Down_Minions/Meshes/Minion_Lane_Ranged_Physics.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ActionRoguelike/Private/AI/SAICharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ActionRoguelike/Private/AI/SAICharacter.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ActionRoguelike/Private/AI/SBTService_CheckAttackRange.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ActionRoguelike/Private/AI/SBTService_CheckAttackRange.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ActionRoguelike/Private/AI/SBTService_CheckHealth.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ActionRoguelike/Private/AI/SBTService_CheckHealth.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ActionRoguelike/Private/AI/SBTTask_HealSelf.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ActionRoguelike/Private/AI/SBTTask_HealSelf.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ActionRoguelike/Private/AI/SBTTask_RangedAttack.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ActionRoguelike/Private/AI/SBTTask_RangedAttack.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ActionRoguelike/Private/SAttributeComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ActionRoguelike/Private/SAttributeComponent.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ActionRoguelike/Private/SCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ActionRoguelike/Private/SCharacter.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ActionRoguelike/Private/SGameModeBase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ActionRoguelike/Private/SGameModeBase.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ActionRoguelike/Private/SGameplayFunctionLibrary.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ActionRoguelike/Private/SGameplayFunctionLibrary.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ActionRoguelike/Private/SInteractionComponent.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ActionRoguelike/Private/SInteractionComponent.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ActionRoguelike/Private/SItemChest.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ActionRoguelike/Private/SItemChest.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ActionRoguelike/Private/SMagicProjectile.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ActionRoguelike/Private/SMagicProjectile.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ActionRoguelike/Private/SWorldUserWidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ActionRoguelike/Private/SWorldUserWidget.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ActionRoguelike/Public/AI/SAICharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ActionRoguelike/Public/AI/SAICharacter.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ActionRoguelike/Public/AI/SBTService_CheckAttackRange.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ActionRoguelike/Public/AI/SBTService_CheckAttackRange.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ActionRoguelike/Public/AI/SBTService_CheckHealth.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ActionRoguelike/Public/AI/SBTService_CheckHealth.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ActionRoguelike/Public/AI/SBTTask_HealSelf.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ActionRoguelike/Public/AI/SBTTask_HealSelf.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ActionRoguelike/Public/AI/SBTTask_RangedAttack.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ActionRoguelike/Public/AI/SBTTask_RangedAttack.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ActionRoguelike/Public/SAttributeComponent.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ActionRoguelike/Public/SAttributeComponent.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ActionRoguelike/Public/SCharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ActionRoguelike/Public/SCharacter.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/ActionRoguelike/Public/SGameModeBase.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ActionRoguelike/Public/SGameModeBase.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ActionRoguelike/Public/SGameplayFunctionLibrary.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ActionRoguelike/Public/SGameplayFunctionLibrary.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ActionRoguelike/Public/SItemChest.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ActionRoguelike/Public/SItemChest.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ActionRoguelike/Public/SWorldUserWidget.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ActionRoguelike/Public/SWorldUserWidget.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -292,7 +323,8 @@
       <workItem from="1682038668378" duration="666000" />
       <workItem from="1682153223355" duration="511000" />
       <workItem from="1682167570026" duration="2526000" />
-      <workItem from="1682423957128" duration="5093000" />
+      <workItem from="1682423957128" duration="5312000" />
+      <workItem from="1682429490213" duration="279000" />
     </task>
     <servers />
   </component>
