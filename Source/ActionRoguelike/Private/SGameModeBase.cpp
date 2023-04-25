@@ -9,6 +9,11 @@
 #include "EnvironmentQuery/EnvQueryManager.h"
 #include "EnvironmentQuery/EnvQueryTypes.h"
 #include "EngineUtils.h"
+#include "SCharacter.h"
+
+static TAutoConsoleVariable<bool> CVarSpawnBots(TEXT("su.SpawnBots"), true, TEXT("Enable spawning of bots via timer"),
+                                                ECVF_Cheat);
+
 
 ASGameModeBase::ASGameModeBase()
 {
@@ -24,16 +29,16 @@ void ASGameModeBase::StartPlay()
 	                                SpawnTimerInterval, true);
 }
 
-void ASGameModeBase::killAll()
+void ASGameModeBase::KillAll()
 {
-	for(TActorIterator<ASAICharacter> It(GetWorld()); It; ++It)
+	for (TActorIterator<ASAICharacter> It(GetWorld()); It; ++It)
 	{
 		ASAICharacter* Bot = *It;
-	
+
 		USAttributeComponent* AttributeComp = USAttributeComponent::GetAttributes(Bot);
-		if(AttributeComp && AttributeComp->IsAlive())
+		if (AttributeComp && AttributeComp->IsAlive())
 		{
-AttributeComp->Kill(this); //pass in player? kill all credit
+			AttributeComp->Kill(this); //pass in player? kill all credit
 		}
 	}
 }
@@ -41,13 +46,19 @@ AttributeComp->Kill(this); //pass in player? kill all credit
 
 void ASGameModeBase::SpawnBotTimerElapsed()
 {
+	if (CVarSpawnBots.GetValueOnGameThread())
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Bot spawning disabled via cvar 'CVarSpawnBots'."));
+		return;
+	}
+
 	int32 NrOfAliveBots = 0;
-	for(TActorIterator<ASAICharacter> It(GetWorld()); It; ++It)
+	for (TActorIterator<ASAICharacter> It(GetWorld()); It; ++It)
 	{
 		ASAICharacter* Bot = *It;
-	
+
 		USAttributeComponent* AttributeComp = USAttributeComponent::GetAttributes(Bot);
-		if(AttributeComp && AttributeComp->IsAlive())
+		if (AttributeComp && AttributeComp->IsAlive())
 		{
 			NrOfAliveBots++;
 		}
@@ -57,20 +68,20 @@ void ASGameModeBase::SpawnBotTimerElapsed()
 
 	float MaxBotCount = 10.0f;
 
-	if(DiffcultyCurve)
+	if (DiffcultyCurve)
 	{
 		MaxBotCount = DiffcultyCurve->GetFloatValue(GetWorld()->TimeSeconds);
 	}
-	
-	if(NrOfAliveBots >= MaxBotCount)
+
+	if (NrOfAliveBots >= MaxBotCount)
 	{
 		UE_LOG(LogTemp, Log, TEXT("At Maximum bot capacity,Skipping bot spawn"));
 		return;
 	}
-	
+
 	UEnvQueryInstanceBlueprintWrapper* QueryInstane = UEnvQueryManager::RunEQSQuery(
 		this, SpawnBotQuery, this, EEnvQueryRunMode::RandomBest5Pct, nullptr);
-	if(ensure(QueryInstane))
+	if (ensure(QueryInstane))
 	{
 		QueryInstane->GetOnQueryFinishedEvent().AddDynamic(this, &ASGameModeBase::QueryCompleted);
 	}
@@ -78,15 +89,15 @@ void ASGameModeBase::SpawnBotTimerElapsed()
 
 void ASGameModeBase::QueryCompleted(UEnvQueryInstanceBlueprintWrapper* QueryInstance, EEnvQueryStatus::Type QueryStatus)
 {
-	if(QueryStatus != EEnvQueryStatus::Success)
+	if (QueryStatus != EEnvQueryStatus::Success)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Spawn bot EQS Query Failed!"));
 		return;
 	}
 
-	TArray<FVector> Locations =  QueryInstance->GetResultsAsLocations();
+	TArray<FVector> Locations = QueryInstance->GetResultsAsLocations();
 
-	if(Locations.IsValidIndex(0))
+	if (Locations.IsValidIndex(0))
 	{
 		GetWorld()->SpawnActor<AActor>(MinionClass, Locations[0], FRotator::ZeroRotator);
 
@@ -94,3 +105,32 @@ void ASGameModeBase::QueryCompleted(UEnvQueryInstanceBlueprintWrapper* QueryInst
 	}
 }
 
+
+void ASGameModeBase::RespawnPlayerElapsed(AController* Controller)
+{
+	if (ensure(Controller))
+	{
+		Controller->UnPossess();
+
+		RestartPlayer(Controller);
+	}
+}
+
+
+void ASGameModeBase::OnActorKilled(AActor* VictimActor, AActor* Killer)
+{
+	ASCharacter* Player = Cast<ASCharacter>(VictimActor);
+	if (Player)
+	{
+		FTimerHandle TimerHandle_RespawnDelay;
+
+		FTimerDelegate Delegate;
+		Delegate.BindUFunction(this, "RespawnPlayerElapsed", Player->GetController());
+
+		float RespawnDelay = 2.0f;
+		GetWorldTimerManager().SetTimer(TimerHandle_RespawnDelay, Delegate, RespawnDelay, false);
+	}
+
+	UE_LOG(LogTemp, Log, TEXT("OnActorKilled: Victim: %s, Killer: %s"), *GetNameSafe(VictimActor),
+	       *GetNameSafe(Killer));
+}
