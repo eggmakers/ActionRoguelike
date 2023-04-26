@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "SActionComponent.h"
 #include "GameFramework/Character.h"
 #include "SCharacter.generated.h"
 
@@ -19,29 +20,9 @@ class ACTIONROGUELIKE_API ASCharacter : public ACharacter
 	GENERATED_BODY()
 
 protected:
-
 	/* VisibleAnywhere = read-only, still useful to view in-editor and enforce a convention. */
 	UPROPERTY(VisibleAnywhere, Category = "Effects")
 	FName TimeToHitParamName;
-
-	UPROPERTY(VisibleAnywhere, Category = "Effects")
-	FName HandSocketName;
-
-	UPROPERTY(EditAnywhere, Category = "Attack")
-	TSubclassOf<AActor> ProjectileClass;
-
-	UPROPERTY(EditAnywhere, Category = "Attack")
-	TSubclassOf<AActor> BlackHoleProjectileClass;
-
-	UPROPERTY(EditAnywhere, Category = "Attack")
-	TSubclassOf<AActor> DashProjectileClass;
-
-	UPROPERTY(EditAnywhere, Category = "Attack")
-	UAnimMontage* AttackAnim;
-
-	/* Particle System played during attack animation */
-	UPROPERTY(EditAnywhere, Category = "Attack")
-	UParticleSystem* CastingEffect;
 
 	FTimerHandle TimerHandle_PrimaryAttack;
 	FTimerHandle TimerHandle_BlackholeAttack;
@@ -62,9 +43,16 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	USAttributeComponent* AttributeComp;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	USActionComponent* ActionComp;
+
 	void MoveForward(float Value);
 
 	void MoveRight(float Value);
+
+	void SpintStart();
+
+	void SpintStop();
 
 	void PrimaryAttack();
 
@@ -92,8 +80,7 @@ protected:
 
 	virtual FVector GetPawnViewLocation() const override;
 
-public:	
-
+public:
 	ASCharacter();
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
