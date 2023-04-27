@@ -2,6 +2,9 @@
 
 
 #include "SActionComponent.h"
+#include "SAction.h"
+#include "GameplayTagContainer.h"
+
 
 // Sets default values for this component's properties
 USActionComponent::USActionComponent()
@@ -19,32 +22,33 @@ void USActionComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	for(TSubclassOf<USAction> ActionClass : DefaultActions)
+	for (TSubclassOf<USAction> ActionClass : DefaultActions)
 	{
 		AddAction(ActionClass);
 	}
-	
 }
 
 
 // Called every frame
-void USActionComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+void USActionComponent::TickComponent(float DeltaTime, ELevelTick TickType,
+                                      FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	// ...
+	FString DebugMsg = GetNameSafe(GetOwner()) + " : " + ActiveGameplayTags.ToStringSimple();
+	GEngine->AddOnScreenDebugMessage(-1, 0.0f, FColor::White, DebugMsg);
 }
 
 
 void USActionComponent::AddAction(TSubclassOf<USAction> AcionClass)
 {
-	if(!ensure(AcionClass))
+	if (!ensure(AcionClass))
 	{
 		return;
 	}
 
-	USAction* NewAction =  NewObject<USAction>(this, AcionClass);
-	if(NewAction)
+	USAction* NewAction = NewObject<USAction>(this, AcionClass);
+	if (NewAction)
 	{
 		Actions.Add(NewAction);
 	}
@@ -53,10 +57,16 @@ void USActionComponent::AddAction(TSubclassOf<USAction> AcionClass)
 
 bool USActionComponent::StartActionByName(AActor* Instigator, FName ActionName)
 {
-	for(USAction* Action : Actions)
+	for (USAction* Action : Actions)
 	{
-		if(Action && Action->ActionName == ActionName)
+		if (Action && Action->ActionName == ActionName)
 		{
+			if (!Action->CanStart(Instigator))
+			{
+				FString FailedMsg = FString::Printf(TEXT("Failed to run: %s"), *ActionName.ToString());
+				GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, FailedMsg);
+				continue;
+			}
 			Action->StartAction(Instigator);
 			return true;
 		}
@@ -68,12 +78,15 @@ bool USActionComponent::StartActionByName(AActor* Instigator, FName ActionName)
 
 bool USActionComponent::StopActionByName(AActor* Instigator, FName ActionName)
 {
-	for(USAction* Action : Actions)
+	for (USAction* Action : Actions)
 	{
-		if(Action && Action->ActionName == ActionName)
+		if (Action && Action->ActionName == ActionName)
 		{
-			Action->StopAction(Instigator);
-			return true;
+			if (Action->IsRunning())
+			{
+				Action->StopAction(Instigator);
+				return true;
+			}
 		}
 	}
 
